@@ -7,11 +7,29 @@ Portfolio:   http://localhost:5000/
 
 from flask import Flask, request, jsonify, send_from_directory, abort
 from flask_cors import CORS
-import sqlite3, json, os, hashlib, secrets, functools
+import sqlite3, json, os, hashlib, secrets, functools, logging
 from datetime import datetime
+
+# ── Logging & debug configuration ─────────────────────────────────────────────
+# LOG_LEVEL  : Python logging level name (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+#              Defaults to INFO when not set.
+# DEBUG_MODE : Set to "true" (case-insensitive) to enable Flask debug mode.
+#              Defaults to False when not set.
+_log_level_name = os.environ.get('LOG_LEVEL', 'INFO').upper()
+LOG_LEVEL = getattr(logging, _log_level_name, logging.INFO)
+
+DEBUG_MODE = os.environ.get('DEBUG_MODE', 'false').lower() in ('1', 'true', 'yes')
+
+logging.basicConfig(
+    level=LOG_LEVEL,
+    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+    datefmt='%Y-%m-%dT%H:%M:%S',
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, supports_credentials=True)
+app.logger.setLevel(LOG_LEVEL)
 
 DB_PATH   = os.path.join(os.path.dirname(__file__), 'site_data.db')
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), 'uploads')
@@ -372,15 +390,18 @@ sys.stdout.reconfigure(encoding="utf-8") if hasattr(sys.stdout, "reconfigure") e
 
 if __name__ == "__main__":
     init_db()
-    print("\n" + "â•"*55)
-    print("  Usman Afzal Portfolio â€” Admin Server")
-    print("â•"*55)
+    print("\n" + "â•"*55)
+    print("  Usman Afzal Portfolio â€" Admin Server")
+    print("â•"*55)
     print(f"  Portfolio:    http://localhost:5000/")
     print(f"  Admin Panel:  http://localhost:5000/admin.html")
     print(f"  Database:     {DB_PATH}")
     print(f"  Uploads:      {UPLOAD_DIR}")
-    print("â”€"*55)
+    print("â"€"*55)
     print(f"  Default login: {DEFAULT_EMAIL} / {DEFAULT_PWD}")
-    print("  (Change in Admin â†’ Settings â†’ Login Credentials)")
-    print("â•"*55 + "\n")
-    app.run(debug=True, port=5000, host='0.0.0.0')
+    print("  (Change in Admin â†' Settings â†' Login Credentials)")
+    print("â"€"*55)
+    print(f"  Log level:    {_log_level_name}")
+    print(f"  Debug mode:   {DEBUG_MODE}")
+    print("â•"*55 + "\n")
+    app.run(debug=DEBUG_MODE, port=5000, host='0.0.0.0')
