@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel – Usman Afzal</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">UA</div>
+    <div class="login-sub">Usman Afzal · Site Admin</div>
+    <label for="loginEmail">Email or Username</label>
+    <input type="text" id="loginEmail" placeholder="admin@usmanafzal.com" autocomplete="username" style="width:100%;padding:.75rem 1rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:.9rem;font-family:inherit;outline:none;margin-bottom:.75rem;transition:border .2s">
+    <label for="loginPwd">Password</label>
+    <input type="password" id="loginPwd" placeholder="Enter admin password" autocomplete="current-password">
+    <div class="login-err" id="loginErr"></div>
+    <button class="btn-login" id="loginBtn">Sign In →</button>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-brand-ico">UA</div>
+      <div><div class="sb-brand-name">Admin Panel</div><div class="sb-brand-sub">usman-afzal.com</div></div>
+    </div>
+
+    <div class="sb-section-label">Content</div>
+    <ul class="sb-nav">
+      <li><button class="sb-nav-item active" data-panel="dashboard"><span class="ico">🏠</span> Dashboard</button></li>
+      <li><button class="sb-nav-item" data-panel="hero"><span class="ico">✨</span> Hero</button></li>
+      <li><button class="sb-nav-item" data-panel="about"><span class="ico">👤</span> About</button></li>
+      <li><button class="sb-nav-item" data-panel="stats"><span class="ico">📊</span> Stats</button></li>
+      <li><button class="sb-nav-item" data-panel="problems"><span class="ico">⚠️</span> Problems</button></li>
+      <li><button class="sb-nav-item" data-panel="experience"><span class="ico">💼</span> Experience</button></li>
+      <li><button class="sb-nav-item" data-panel="approach"><span class="ico">🔄</span> Approach</button></li>
+      <li><button class="sb-nav-item" data-panel="testimonials"><span class="ico">⭐</span> Testimonials</button></li>
+      <li><button class="sb-nav-item" data-panel="services"><span class="ico">🛠️</span> Services</button></li>
+      <li><button class="sb-nav-item" data-panel="why"><span class="ico">🎯</span> Why Me</button></li>
+      <li><button class="sb-nav-item" data-panel="faq"><span class="ico">❓</span> FAQ</button></li>
+    </ul>
+
+    <div class="sb-section-label">New Sections</div>
+    <ul class="sb-nav">
+      <li><button class="sb-nav-item" data-panel="blog"><span class="ico">📝</span> Blog Posts</button></li>
+      <li><button class="sb-nav-item" data-panel="events"><span class="ico">📅</span> Events</button></li>
+    </ul>
+
+    <div class="sb-section-label">Global</div>
+    <ul class="sb-nav">
+      <li><button class="sb-nav-item" data-panel="nav"><span class="ico">🔗</span> Navigation</button></li>
+      <li><button class="sb-nav-item" data-panel="cta"><span class="ico">📢</span> CTA & Footer</button></li>
+      <li><button class="sb-nav-item" data-panel="settings"><span class="ico">⚙️</span> Settings</button></li>
+    </ul>
+
+    <div class="sb-bottom">
+      <div class="sb-user">
+        <div class="sb-user-av">UA</div>
+        <div><div class="sb-user-name">Usman Afzal</div><div class="sb-user-role">Administrator</div></div>
+        <button class="btn-logout" id="logoutBtn" title="Logout">⏻</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div id="main">
+    <!-- TOPBAR -->
+    <div id="topbar">
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <button id="sbToggle">☰</button>
+        <span class="topbar-title" id="topbarTitle">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-preview" onclick="window.open('index.html','_blank')">👁 Preview Site</button>
+        <button class="btn-save-top" id="saveTopBtn">💾 Save &amp; Publish</button>
+      </div>
+    </div>
+
+    <!-- CONTENT PANELS -->
+    <div id="content">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="dash-welcome">
+          <h1>Welcome back, Usman 👋</h1>
+          <p>Edit any section of your portfolio site below. Changes are saved instantly.</p>
+        </div>
+        <div class="dash-grid" id="dashGrid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <!-- ── HERO ── -->
+      <div class="panel" id="panel-hero">
+        <div class="sec-header"><h2>✨ Hero Section</h2><p>Edit the main headline, subtext, badges and CTA buttons.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>🏷️ Badges</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Badge 1 Text</label><input type="text" id="heroBadge1" placeholder="Microsoft Cloud Architect"></div>
+              <div class="field"><label>Badge 2 Text</label><input type="text" id="heroBadge2" placeholder="GenAI &amp; Copilot Expert"></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>📝 Headline &amp; Subtext</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid one">
+              <div class="field"><label>H1 Line 1</label><input type="text" id="heroH1L1" placeholder="Cloud Architect &amp;"></div>
+              <div class="field"><label>H1 Line 2</label><input type="text" id="heroH1L2" placeholder="Microsoft AI Partner"></div>
+              <div class="field"><label>Subtext</label><textarea id="heroSub" rows="2" placeholder="Drive digital transformation..."></textarea></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>🖼️ Profile Image</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="img-field">
+              <label>Hero Image (transparent background)</label>
+              <div class="drop-zone" id="dz-heroImg">
+                <input type="file" accept="image/*" id="file-heroImg">
+                <div class="drop-zone-ico">🖼️</div>
+                <div class="drop-zone-text"><strong>Drop image here</strong> or click to browse</div>
+                <div class="drop-zone-hint">PNG with transparent background recommended</div>
+              </div>
+              <div class="img-preview-wrap">
+                <img class="img-preview" id="prev-heroImg" alt="">
+                <button class="img-clear" onclick="clearImg('heroImg')">✕</button>
+              </div>
+              <input type="text" class="img-url-input" id="url-heroImg" placeholder="…or paste an image URL">
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>🔘 Buttons</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Primary Button Text</label><input type="text" id="heroBtnPrimary" placeholder="Connect with Me"></div>
+              <div class="field"><label>Secondary Button Text</label><input type="text" id="heroBtnSecondary" placeholder="View Experience"></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>🏢 Marquee Companies</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="field"><label>Companies (comma-separated)</label><input type="text" id="heroMarquee" placeholder="Microsoft, KTH Royal Institute, CGI, PostNord, Saab"></div>
+            <small style="color:var(--text3);font-size:.72rem">Separate company names with commas</small>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveSection('hero')">💾 Save Hero</button>
+      </div>
+
+      <!-- ── ABOUT ── -->
+      <div class="panel" id="panel-about">
+        <div class="sec-header"><h2>👤 About Section</h2><p>Edit the about paragraph and the animated quote.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>📝 About Paragraph</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid one">
+              <div class="field"><label>Section Intro Heading (line 1)</label><input type="text" id="aboutIntroQ1" placeholder="If that sounds familiar,"></div>
+              <div class="field"><label>Section Intro Heading (line 2)</label><input type="text" id="aboutIntroQ2" placeholder="I've been there — and I can help."></div>
+              <div class="field"><label>About Body Text</label><textarea id="aboutBody" rows="4" placeholder="I'm Usman — a Senior Cloud Solution Architect at Microsoft..."></textarea></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>💬 Animated Quote</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="field"><label>Quote Text (scroll-animated word reveal)</label><textarea id="aboutQuote" rows="3" placeholder="Technology alone doesn't transform organizations..."></textarea></div>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveSection('about')">💾 Save About</button>
+      </div>
+
+      <!-- ── STATS ── -->
+      <div class="panel" id="panel-stats">
+        <div class="sec-header"><h2>📊 Stats Counters</h2><p>Edit the animated number counters.</p></div>
+        <div id="statsList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addStat()">+ Add Stat</button>
+        <button class="btn-save" onclick="saveSection('stats')">💾 Save Stats</button>
+      </div>
+
+      <!-- ── PROBLEMS ── -->
+      <div class="panel" id="panel-problems">
+        <div class="sec-header"><h2>⚠️ Problems Section</h2><p>Edit the "You've invested in the cloud..." section.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Heading</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Eyebrow Label</label><input type="text" id="probEyebrow" placeholder="The Problem"></div>
+              <div class="field"><label>H2 Line 1</label><input type="text" id="probH2L1" placeholder="You've invested in the cloud"></div>
+              <div class="field"><label>H2 Line 2</label><input type="text" id="probH2L2" placeholder="but the value hasn't landed"></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>🖼️ Background Image</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="img-field">
+              <label>Problems section background image</label>
+              <div class="drop-zone" id="dz-probImg">
+                <input type="file" accept="image/*" id="file-probImg">
+                <div class="drop-zone-ico">🖼️</div>
+                <div class="drop-zone-text"><strong>Drop image</strong> or click to browse</div>
+              </div>
+              <div class="img-preview-wrap"><img class="img-preview" id="prev-probImg" alt=""><button class="img-clear" onclick="clearImg('probImg')">✕</button></div>
+              <input type="text" class="img-url-input" id="url-probImg" placeholder="…or paste URL">
+            </div>
+          </div>
+        </div>
+        <div id="problemsList" class="item-list" style="margin-top:1rem"></div>
+        <button class="btn-add-item" onclick="addProblem()">+ Add Problem</button>
+        <button class="btn-save" onclick="saveSection('problems')">💾 Save Problems</button>
+      </div>
+
+      <!-- ── EXPERIENCE ── -->
+      <div class="panel" id="panel-experience">
+        <div class="sec-header"><h2>💼 Experience / Work Cards</h2><p>Add, edit or remove work experience cards.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Heading</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Eyebrow Label</label><input type="text" id="workEyebrow" placeholder="Selected Experience"></div>
+              <div class="field"><label>H2 Line 1</label><input type="text" id="workH2L1" placeholder="Initiatives that"></div>
+              <div class="field"><label>H2 Line 2</label><input type="text" id="workH2L2" placeholder="drive transformation"></div>
+            </div>
+          </div>
+        </div>
+        <div id="workList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addWork()">+ Add Experience Card</button>
+        <button class="btn-save" onclick="saveSection('experience')">💾 Save Experience</button>
+      </div>
+
+      <!-- ── APPROACH ── -->
+      <div class="panel" id="panel-approach">
+        <div class="sec-header"><h2>🔄 Approach / How It Works</h2><p>Edit the 3-step process section.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Heading</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Eyebrow Label</label><input type="text" id="howEyebrow" placeholder="How it works"></div>
+              <div class="field"><label>H2 Line 1</label><input type="text" id="howH2L1" placeholder="Structured. Proven."></div>
+              <div class="field"><label>H2 Line 2</label><input type="text" id="howH2L2" placeholder="Scalable."></div>
+            </div>
+          </div>
+        </div>
+        <div id="approachList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addApproach()">+ Add Step</button>
+        <button class="btn-save" onclick="saveSection('approach')">💾 Save Approach</button>
+      </div>
+
+      <!-- ── TESTIMONIALS ── -->
+      <div class="panel" id="panel-testimonials">
+        <div class="sec-header"><h2>⭐ Testimonials</h2><p>Edit endorsement cards — quote, name, role, company.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Heading</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Eyebrow Label</label><input type="text" id="revEyebrow" placeholder="Endorsements"></div>
+              <div class="field"><label>H2 Line 1</label><input type="text" id="revH2L1" placeholder="What colleagues"></div>
+              <div class="field"><label>H2 Line 2</label><input type="text" id="revH2L2" placeholder="and clients say."></div>
+            </div>
+          </div>
+        </div>
+        <div id="testimonialList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addTestimonial()">+ Add Testimonial</button>
+        <button class="btn-save" onclick="saveSection('testimonials')">💾 Save Testimonials</button>
+      </div>
+
+      <!-- ── SERVICES ── -->
+      <div class="panel" id="panel-services">
+        <div class="sec-header"><h2>🛠️ Services / Tabs</h2><p>Edit service tabs, features and quotes.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Heading</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Eyebrow Label</label><input type="text" id="svcEyebrow" placeholder="Services"></div>
+              <div class="field"><label>H2</label><input type="text" id="svcH2" placeholder="What I do"></div>
+            </div>
+          </div>
+        </div>
+        <div id="serviceList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addService()">+ Add Service Tab</button>
+        <button class="btn-save" onclick="saveSection('services')">💾 Save Services</button>
+      </div>
+
+      <!-- ── WHY ── -->
+      <div class="panel" id="panel-why">
+        <div class="sec-header"><h2>🎯 Why Work With Me</h2><p>Edit the 6 differentiation cards.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Heading</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Eyebrow</label><input type="text" id="whyEyebrow" placeholder="Why work with me"></div>
+              <div class="field"><label>H2 Line 1</label><input type="text" id="whyH2L1" placeholder="Strategy, architecture,"></div>
+              <div class="field"><label>H2 Line 2</label><input type="text" id="whyH2L2" placeholder="and delivery — all in one."></div>
+            </div>
+          </div>
+        </div>
+        <div id="whyList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addWhy()">+ Add Card</button>
+        <button class="btn-save" onclick="saveSection('why')">💾 Save Why Me</button>
+      </div>
+
+      <!-- ── FAQ ── -->
+      <div class="panel" id="panel-faq">
+        <div class="sec-header"><h2>❓ FAQ</h2><p>Add, edit or remove frequently asked questions.</p></div>
+        <div id="faqList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addFaq()">+ Add Question</button>
+        <button class="btn-save" onclick="saveSection('faq')">💾 Save FAQ</button>
+      </div>
+
+      <!-- ── BLOG ── -->
+      <div class="panel" id="panel-blog">
+        <div class="sec-header"><h2>📝 Blog Posts</h2><p>Add blog posts — they'll appear as a new section on your site.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Settings</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="visibility-row">
+              <label class="toggle-switch"><input type="checkbox" id="blogVisible"><span class="toggle-slider"></span></label>
+              <span class="visibility-label">Show blog section on site</span>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label>Section Eyebrow</label><input type="text" id="blogEyebrow" placeholder="Insights"></div>
+              <div class="field"><label>Section H2</label><input type="text" id="blogH2" placeholder="Thoughts on Cloud &amp; AI"></div>
+            </div>
+          </div>
+        </div>
+        <div id="blogList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addBlog()">+ Add Blog Post</button>
+        <button class="btn-save" onclick="saveSection('blog')">💾 Save Blog</button>
+      </div>
+
+      <!-- ── EVENTS ── -->
+      <div class="panel" id="panel-events">
+        <div class="sec-header"><h2>📅 Events</h2><p>Upcoming talks, conferences or workshops to show on your site.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Section Settings</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="visibility-row">
+              <label class="toggle-switch"><input type="checkbox" id="eventsVisible"><span class="toggle-slider"></span></label>
+              <span class="visibility-label">Show events section on site</span>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label>Section Eyebrow</label><input type="text" id="eventsEyebrow" placeholder="Speaking"></div>
+              <div class="field"><label>Section H2</label><input type="text" id="eventsH2" placeholder="Upcoming Events"></div>
+            </div>
+          </div>
+        </div>
+        <div id="eventsList" class="item-list"></div>
+        <button class="btn-add-item" onclick="addEvent()">+ Add Event</button>
+        <button class="btn-save" onclick="saveSection('events')">💾 Save Events</button>
+      </div>
+
+      <!-- ── NAV ── -->
+      <div class="panel" id="panel-nav">
+        <div class="sec-header"><h2>🔗 Navigation</h2><p>Edit nav link labels.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Nav Links</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid" id="navLinksForm"></div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Connect Button</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Button Label</label><input type="text" id="navBtnLabel" placeholder="Connect with Me"></div>
+              <div class="field"><label>Button URL</label><input type="url" id="navBtnUrl" placeholder="https://linkedin.com/in/usafzal/"></div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveSection('nav')">💾 Save Navigation</button>
+      </div>
+
+      <!-- ── CTA & FOOTER ── -->
+      <div class="panel" id="panel-cta">
+        <div class="sec-header"><h2>📢 CTA &amp; Footer</h2><p>Edit the bottom call-to-action and footer text.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>CTA Section</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>CTA Headline Line 1</label><input type="text" id="ctaL1" placeholder="Ready to transform"></div>
+              <div class="field"><label>CTA Headline Line 2</label><input type="text" id="ctaL2" placeholder="your digital workplace?"></div>
+              <div class="field"><label>CTA Button Text</label><input type="text" id="ctaBtn" placeholder="Connect on LinkedIn"></div>
+              <div class="field"><label>CTA Button URL</label><input type="url" id="ctaBtnUrl" placeholder="https://linkedin.com/in/usafzal/"></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Footer</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Copyright Name</label><input type="text" id="footerName" placeholder="Usman Afzal"></div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveSection('cta')">💾 Save CTA &amp; Footer</button>
+      </div>
+
+      <!-- ── SETTINGS ── -->
+      <div class="panel" id="panel-settings">
+        <div class="sec-header"><h2>⚙️ Site Settings</h2><p>Global settings — name, LinkedIn URL, profile image, admin password.</p></div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Identity</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field"><label>Full Name</label><input type="text" id="settingsName" placeholder="Usman Afzal"></div>
+              <div class="field"><label>LinkedIn URL</label><input type="url" id="settingsLinkedIn" placeholder="https://linkedin.com/in/usafzal/"></div>
+              <div class="field"><label>Site Title</label><input type="text" id="settingsTitle" placeholder="Usman Afzal – Cloud Architect &amp; Microsoft AI Partner"></div>
+              <div class="field"><label>Nav Logo Initials</label><input type="text" id="settingsInitials" placeholder="UA" maxlength="3"></div>
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>Profile Image (nav &amp; buttons)</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="img-field">
+              <label>Round profile photo used in nav button</label>
+              <div class="drop-zone" id="dz-profileImg">
+                <input type="file" accept="image/*" id="file-profileImg">
+                <div class="drop-zone-ico">📷</div>
+                <div class="drop-zone-text"><strong>Drop profile photo</strong> or click to browse</div>
+              </div>
+              <div class="img-preview-wrap"><img class="img-preview" id="prev-profileImg" alt=""><button class="img-clear" onclick="clearImg('profileImg')">✕</button></div>
+              <input type="text" class="img-url-input" id="url-profileImg" placeholder="…or paste URL">
+            </div>
+          </div>
+        </div>
+        <div class="editor-card">
+          <div class="editor-card-header"><h3>🔒 Login Credentials</h3><span class="toggle-ico">▾</span></div>
+          <div class="editor-card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label>Admin Email / Username</label>
+                <input type="text" id="adminEmail" placeholder="admin@usmanafzal.com">
+                <small>Used to sign in to this admin panel</small>
+              </div>
+              <div class="field">
+                <label>Contact Email (shown on site)</label>
+                <input type="text" id="contactEmail" placeholder="usman@usmanafzal.com">
+                <small>Displayed publicly on the website</small>
+              </div>
+            </div>
+            <hr class="divider">
+            <div class="form-grid">
+              <div class="field"><label>New Password</label><input type="password" id="newPwd" placeholder="Leave blank to keep current"></div>
+              <div class="field"><label>Confirm Password</label><input type="password" id="confirmPwd" placeholder="Repeat new password"></div>
+            </div>
+            <div style="margin-top:.5rem;padding:.65rem .85rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-sm);font-size:.78rem;color:var(--text3)">
+              🔐 Current admin login: <span id="currentEmailDisplay" style="color:var(--teal);font-family:'DM Mono',monospace"></span>
+            </div>
+            <button class="btn-save" style="margin-top:.75rem" onclick="saveCredentials()">🔒 Save Credentials</button>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveSection('settings')">💾 Save Settings</button>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<script src="admin.js" charset="utf-8"></script>
+</body>
+</html>

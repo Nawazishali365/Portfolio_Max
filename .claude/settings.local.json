@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 src/ui-ux-pro-max/scripts/search.py \"social media marketing agency creative studio\" --design-system -p \"Socials fix\")",
+      "Bash(python3 src/ui-ux-pro-max/scripts/search.py \"agency portfolio hero centric\" --domain landing -n 3)",
+      "Bash(python3 src/ui-ux-pro-max/scripts/search.py \"best practices accessibility hover focus\" --domain ux -n 8)",
+      "WebFetch(domain:www.matteofabbiani.com)",
+      "Bash(curl -s \"https://www.matteofabbiani.com/\" -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\")",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s \"https://cdn.prod.website-files.com/685992d920f7167b41444649/css/mf-new.685992d920f7167b41444648-ece39c19e.min.css\")",
+      "Bash(curl -s \"https://cdn.prod.website-files.com/685992d920f7167b41444649/js/mf-new.achunk.db80639074bc0296.js\")",
+      "Bash(curl -s \"https://cdn.prod.website-files.com/685992d920f7167b41444649/js/mf-new.achunk.22b66e874d42861f.js\")",
+      "Bash(grep -E \"\\\\.\\(html|css|js\\)$\")",
+      "WebFetch(domain:www.linkedin.com)"
+    ]
+  }
+}
