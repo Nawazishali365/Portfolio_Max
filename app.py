@@ -353,6 +353,11 @@ def index():
     return send_from_directory('.', 'index.html')
 
 
+@app.route('/admin.html')
+def admin():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'admin.html')
+
+
 @app.route('/<path:filename>')
 def static_files(filename):
     return send_from_directory('.', filename)
