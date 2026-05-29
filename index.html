@@ -81,10 +81,14 @@
       </a>
       <div class="nav-sep"></div>
       <div class="nav-links">
+        <a href="#hero" class="nav-link">Home</a>
+        <a href="#featured" class="nav-link">Featured</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#activities" class="nav-link">Activities</a>
+        <a href="#upcoming" class="nav-link">Upcoming</a>
         <a href="#work" class="nav-link">Experience</a>
-        <a href="#process" class="nav-link">Approach</a>
         <a href="#reviews" class="nav-link">Testimonials</a>
-        <a href="#services" class="nav-link">Services</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </div>
     </div>
     <div class="nav-right">
@@ -97,10 +101,29 @@
           </div>
         </a>
       </div>
+      <button class="burger-btn" id="burgerBtn" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </div>
   <div class="nav-prog" id="navProg"></div>
 </nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-menu-in">
+    <a href="#hero" class="mob-menu-link">Home</a>
+    <a href="#featured" class="mob-menu-link">Featured</a>
+    <a href="#about" class="mob-menu-link">About</a>
+    <a href="#activities" class="mob-menu-link">Activities</a>
+    <a href="#upcoming" class="mob-menu-link">Upcoming</a>
+    <a href="#work" class="mob-menu-link">Experience</a>
+    <a href="#reviews" class="mob-menu-link">Testimonials</a>
+    <a href="#contact" class="mob-menu-link">Contact</a>
+  </div>
+</div>
 
 <!-- ══ HERO ══ -->
 <section class="hero" id="hero">
@@ -171,6 +194,46 @@
   </div>
 </section>
 
+<!-- ══ FEATURED HIGHLIGHT ══ -->
+<section class="sec" id="featured" style="background:var(--bg2)">
+  <div class="w">
+    <div class="sec-intro in-wrap">
+      <div class="ey" data-ey><span class="ey-bg"></span><span class="ey-t">Featured</span></div>
+      <h2 class="h2" data-split-h2>Featured Highlight</h2>
+    </div>
+    <div class="feat-section-grid">
+      <div class="feat-video-box">
+        <div class="feat-video-inner">
+          <iframe 
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+      <div class="feat-event-box">
+        <div class="feat-event-card">
+          <div class="feat-event-card-bg"></div>
+          <div class="feat-event-card-content">
+            <span class="feat-event-eyebrow">LATEST BRIEFING</span>
+            <h3 class="feat-event-title">Microsoft Copilot &amp; GenAI Executive Briefing</h3>
+            <p class="feat-event-desc">An exclusive high-level adoption and roadmap workshop showing enterprise leaders how to unlock the value of Licensed Copilot nodes, secure workflows, and drive adoption from pilot to 90% daily usage.</p>
+            <div class="feat-event-footer">
+              <span class="feat-event-meta">📍 Stockholm, Sweden</span>
+              <a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-sm">
+                <div class="btn-fill"></div>
+                <div class="btn-in">Register Now</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ PROBLEMS ══ -->
 <section class="sec" style="background:var(--black)">
   <div class="w">
@@ -218,7 +281,7 @@
 </section>
 
 <!-- ══ INTRO BRIDGE ══ -->
-<section class="sec" style="background:var(--black)">
+<section class="sec" id="about" style="background:var(--black)">
   <div class="w">
     <div class="intro-bridge">
       <div class="ey" data-ey style="margin-bottom:2rem"><span class="ey-bg"></span><span class="ey-t">About</span></div>
@@ -473,43 +536,55 @@
 </div></div>
 
 <!-- ══ SERVICES / TABS ══ -->
-<section class="sec-sv" id="services">
+<section class="sec-sv" id="activities">
   <div class="w">
     <div class="tabs-layout">
       <div class="tabs-left">
         <div class="sec-intro">
-          <div class="ey" data-ey><span class="ey-bg"></span><span class="ey-t">Services</span></div>
+          <div class="ey" data-ey><span class="ey-bg"></span><span class="ey-t">Activities</span></div>
           <h2 class="h2" data-split-h2>What I do</h2>
         </div>
         <div class="fbar" id="fbar">
-          <button class="fb on" data-t="0"><div class="fb-bg"></div><span class="fb-t">Cloud Strategy</span></button>
-          <button class="fb" data-t="1"><div class="fb-bg"></div><span class="fb-t">AI &amp; Copilot</span></button>
-          <button class="fb" data-t="2"><div class="fb-bg"></div><span class="fb-t">Modern Work</span></button>
+          <button class="fb on" data-t="0"><div class="fb-bg"></div><span class="fb-t">Speaking</span></button>
+          <button class="fb" data-t="1"><div class="fb-bg"></div><span class="fb-t">Workshops</span></button>
+          <button class="fb" data-t="2"><div class="fb-bg"></div><span class="fb-t">Webinars</span></button>
         </div>
       </div>
       <div class="tabs-right">
         <div class="tp on" id="tp0">
           <div class="tp-in">
-            <div class="tp-top"><div><div class="tp-price-lbl">Engagement scope</div><div class="tp-price">Enterprise</div></div><div class="mag"><a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-lg" data-mag><div class="btn-fill"></div><div class="btn-in" style="display:flex;align-items:center;gap:10px;"><span>Connect with Me</span><img src="usman-profile.png" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;" alt=""></div></a></div></div>
-            <div><h3 class="tp-h">Cloud Strategy &amp; Architecture</h3><div class="feat-list"><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Azure solution design &amp; architecture</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Cloud migration roadmap &amp; planning</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Governance framework &amp; cost optimization</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Executive stakeholder alignment</div></div></div>
-            <div class="tp-btm"><div><p class="tp-q">"Our Azure costs dropped 28% while deployment speed tripled."</p><div class="tp-person"><div style="width:2.825rem;height:2.825rem;border-radius:4px;background:#0078d4;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:.85rem;flex:none">EL</div><div><div class="tp-pn">Erik Lindqvist</div><div class="tp-pc">CTO, Nordic Enterprise</div></div></div></div><div class="tp-vis"><img src="https://cdn.prod.website-files.com/685992d920f7167b41444649/686bc589c7e82c1afb6c8a16_mf-work-indigo.avif" alt="" loading="lazy"></div></div>
+            <div class="tp-top"><div><div class="tp-price-lbl">Engagement scope</div><div class="tp-price">Speaking</div></div><div class="mag"><a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-lg" data-mag><div class="btn-fill"></div><div class="btn-in" style="display:flex;align-items:center;gap:10px;"><span>Connect with Me</span><img src="usman-profile.png" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;" alt=""></div></a></div></div>
+            <div><h3 class="tp-h">Speaking &amp; Keynotes</h3><div class="feat-list"><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Cloud Strategy &amp; Architecture presentations</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Microsoft GenAI &amp; Copilot keynotes</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Enterprise digital transformation panels</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Academic guest lectures at KTH</div></div></div>
+            <div class="tp-btm"><div><p class="tp-q">"Usman's keynote on enterprise collaboration was both strategically deep and highly engaging."</p><div class="tp-person"><div style="width:2.825rem;height:2.825rem;border-radius:4px;background:#0078d4;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:.85rem;flex:none">EL</div><div><div class="tp-pn">Erik Lindqvist</div><div class="tp-pc">CTO, Nordic Enterprise</div></div></div></div><div class="tp-vis"><img src="https://cdn.prod.website-files.com/685992d920f7167b41444649/686bc589c7e82c1afb6c8a16_mf-work-indigo.avif" alt="" loading="lazy"></div></div>
           </div>
         </div>
         <div class="tp" id="tp1">
           <div class="tp-in">
-            <div class="tp-top"><div><div class="tp-price-lbl">Engagement scope</div><div class="tp-price">Advisory</div></div><div class="mag"><a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-lg" data-mag><div class="btn-fill"></div><div class="btn-in" style="display:flex;align-items:center;gap:10px;"><span>Connect with Me</span><img src="usman-profile.png" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;" alt=""></div></a></div></div>
-            <div><h3 class="tp-h">GenAI &amp; Microsoft Copilot</h3><div class="feat-list"><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Copilot readiness assessment</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Deployment strategy &amp; governance</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Adoption enablement &amp; training</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>ROI measurement &amp; reporting</div></div></div>
-            <div class="tp-btm"><div><p class="tp-q">"From pilot to 2,000 active Copilot users in 90 days."</p><div class="tp-person"><div style="width:2.825rem;height:2.825rem;border-radius:4px;background:#6264a7;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:.85rem;flex:none">MS</div><div><div class="tp-pn">Maria Svensson</div><div class="tp-pc">Head of Digital</div></div></div></div><div class="tp-vis"><img src="https://cdn.prod.website-files.com/685992d920f7167b41444649/686bc5890c8d9aac911aae40_mf-work-nimbi.avif" alt="" loading="lazy"></div></div>
+            <div class="tp-top"><div><div class="tp-price-lbl">Engagement scope</div><div class="tp-price">Workshops</div></div><div class="mag"><a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-lg" data-mag><div class="btn-fill"></div><div class="btn-in" style="display:flex;align-items:center;gap:10px;"><span>Connect with Me</span><img src="usman-profile.png" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;" alt=""></div></a></div></div>
+            <div><h3 class="tp-h">Hands-on Workshops</h3><div class="feat-list"><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Azure Architecture design sessions</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Microsoft 365 enablement labs</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>GenAI readiness &amp; governance bootcamps</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Change management training programs</div></div></div>
+            <div class="tp-btm"><div><p class="tp-q">"His hands-on workshop aligned our leadership team and gave us a clear 3-month AI roadmap."</p><div class="tp-person"><div style="width:2.825rem;height:2.825rem;border-radius:4px;background:#6264a7;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:.85rem;flex:none">MS</div><div><div class="tp-pn">Maria Svensson</div><div class="tp-pc">Head of Digital</div></div></div></div><div class="tp-vis"><img src="https://cdn.prod.website-files.com/685992d920f7167b41444649/686bc5890c8d9aac911aae40_mf-work-nimbi.avif" alt="" loading="lazy"></div></div>
           </div>
         </div>
         <div class="tp" id="tp2">
           <div class="tp-in">
-            <div class="tp-top"><div><div class="tp-price-lbl">Engagement scope</div><div class="tp-price">Programme</div></div><div class="mag"><a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-lg" data-mag><div class="btn-fill"></div><div class="btn-in" style="display:flex;align-items:center;gap:10px;"><span>Connect with Me</span><img src="usman-profile.png" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;" alt=""></div></a></div></div>
-            <div><h3 class="tp-h">Microsoft 365 &amp; Modern Work</h3><div class="feat-list"><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>M365 adoption &amp; engagement programs</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Teams &amp; Power Platform enablement</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Change management &amp; communication</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Scalable training &amp; enablement frameworks</div></div></div>
-            <div class="tp-btm"><div><p class="tp-q">"Teams adoption jumped from 35% to 91% within a year."</p><div class="tp-person"><div style="width:2.825rem;height:2.825rem;border-radius:4px;background:#005a9e;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:.85rem;flex:none">JB</div><div><div class="tp-pn">Johan Bergström</div><div class="tp-pc">IT Director</div></div></div></div><div class="tp-vis"><img src="https://cdn.prod.website-files.com/685992d920f7167b41444649/69f37c0e86c79c3103644845_mf-work-compaan.jpg" alt="" loading="lazy"></div></div>
+            <div class="tp-top"><div><div class="tp-price-lbl">Engagement scope</div><div class="tp-price">Webinars</div></div><div class="mag"><a href="https://www.linkedin.com/in/usafzal/" target="_blank" class="btn btn-p btn-lg" data-mag><div class="btn-fill"></div><div class="btn-in" style="display:flex;align-items:center;gap:10px;"><span>Connect with Me</span><img src="usman-profile.png" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex:none;" alt=""></div></a></div></div>
+            <div><h3 class="tp-h">Webinars &amp; Digital Events</h3><div class="feat-list"><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Monthly Copilot readiness webinars</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Azure governance &amp; cost optimization deep-dives</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Viva adoption strategies and live Q&amp;A</div><div class="fi"><span class="fi-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 7" stroke="#41c0d2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Virtual executive alignment webinars</div></div></div>
+            <div class="tp-btm"><div><p class="tp-q">"The Teams and Power Platform webinar had over 500 attendees and immediate practical takeaways."</p><div class="tp-person"><div style="width:2.825rem;height:2.825rem;border-radius:4px;background:#005a9e;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:.85rem;flex:none">JB</div><div><div class="tp-pn">Johan Bergström</div><div class="tp-pc">IT Director</div></div></div></div><div class="tp-vis"><img src="https://cdn.prod.website-files.com/685992d920f7167b41444649/69f37c0e86c79c3103644845_mf-work-compaan.jpg" alt="" loading="lazy"></div></div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+<!-- ══ UPCOMING EVENTS ══ -->
+<section class="sec" id="upcoming" style="background:var(--bg2)">
+  <div class="w">
+    <div class="sec-intro in-wrap">
+      <div class="ey" data-ey><span class="ey-bg"></span><span class="ey-t">Calendar</span></div>
+      <h2 class="h2" data-split-h2>Upcoming Activities</h2>
+    </div>
+    <div class="events-grid" id="eventsContainer">
+      <!-- Dynamically Loaded by JS -->
     </div>
   </div>
 </section>
@@ -538,7 +613,7 @@
 </section>
 
 <!-- ══ BOTTOM CTA ══ -->
-<section class="btm-cta">
+<section class="btm-cta" id="contact">
   <div class="cta-inner">
     <div class="cta-t" id="ctaText">Ready to transform<br>your digital workplace?</div>
     <div class="mag">
@@ -556,10 +631,14 @@
     <div class="ft-in">
       <span class="ft-copy">© <span id="yr"></span> Usman Afzal</span>
       <div class="ft-links">
+        <a href="#hero" class="ft-link">Home</a>
+        <a href="#featured" class="ft-link">Featured</a>
+        <a href="#about" class="ft-link">About</a>
+        <a href="#activities" class="ft-link">Activities</a>
+        <a href="#upcoming" class="ft-link">Upcoming</a>
         <a href="#work" class="ft-link">Experience</a>
-        <a href="#process" class="ft-link">Approach</a>
         <a href="#reviews" class="ft-link">Testimonials</a>
-        <a href="#services" class="ft-link">Services</a>
+        <a href="#contact" class="ft-link">Contact</a>
       </div>
     </div>
   </div>

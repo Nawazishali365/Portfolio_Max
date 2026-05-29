@@ -61,9 +61,55 @@ async function loadDynamicContent() {
       // It's safer to just inject standard classes if we're replacing
     }
 
-    // Since fully parsing and replacing everything dynamically might break scrolltriggers if the DOM elements are completely recreated,
-    // we should just update text content of existing elements where possible.
-    
+    // 4. Dynamic Upcoming Events
+    try {
+      const eventsRes = await fetch('/api/events');
+      if (eventsRes.ok) {
+        const events = await eventsRes.json();
+        const container = document.getElementById('eventsContainer');
+        if (container) {
+          if (!events || events.length === 0) {
+            container.innerHTML = `<p style="text-align:center;color:var(--nm);grid-column:1/-1;padding:2rem 0;font-size:1rem;">No upcoming events scheduled at this time. Check back soon!</p>`;
+          } else {
+            container.innerHTML = events.map(ev => {
+              // Extract a nice category like "Webinar", "Workshop", "Speaking" from location/type or default to "ACTIVITY"
+              let cat = 'Activity';
+              if (ev.location) {
+                const locLower = ev.location.toLowerCase();
+                if (locLower.includes('webinar') || locLower.includes('online') || locLower.includes('zoom') || locLower.includes('teams')) {
+                  cat = 'Webinar';
+                } else if (locLower.includes('workshop') || locLower.includes('class') || locLower.includes('bootcamp')) {
+                  cat = 'Workshop';
+                } else if (locLower.includes('speaking') || locLower.includes('talk') || locLower.includes('keynote') || locLower.includes('conference')) {
+                  cat = 'Speaking';
+                }
+              }
+              const cleanLoc = ev.location || 'Online';
+              const cleanLink = ev.link ? (ev.link.startsWith('http') ? ev.link : 'https://' + ev.link) : '';
+              return `
+                <div class="event-card">
+                  <div class="event-card-content">
+                    <div class="event-meta">
+                      <span class="event-cat">${cat}</span>
+                      <span class="event-date">${ev.date || 'Upcoming'}</span>
+                    </div>
+                    <h3 class="event-title">${ev.title || 'Special Event'}</h3>
+                    <p class="event-desc">${ev.description || 'Join us for this special professional learning and architecture session.'}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto;">
+                      <span class="feat-event-meta">📍 ${cleanLoc}</span>
+                      ${cleanLink ? `<a href="${cleanLink}" target="_blank" class="event-link">Learn More <span>→</span></a>` : ''}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load events calendar:", err);
+    }
+
     // Let's implement a simpler reload for GSAP
     if (window.ScrollTrigger) {
       setTimeout(() => ScrollTrigger.refresh(), 500);

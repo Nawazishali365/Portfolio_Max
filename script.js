@@ -544,7 +544,7 @@ setTimeout(() => document.getElementById('floatBd')?.classList.add('show'), 2600
 
 /* ── NAV ACTIVE SECTION TRACKING ── */
 {
-  const secIds = ['hero', 'work', 'process', 'reviews', 'services'];
+  const secIds = ['hero', 'featured', 'about', 'activities', 'upcoming', 'work', 'reviews', 'contact'];
   const navAs = document.querySelectorAll('.nav-link[href^="#"]');
   ScrollTrigger.create({
     start: 0,
@@ -783,7 +783,7 @@ document.querySelectorAll('.pc').forEach(card => {
 (function(){
   let done = false;
   ScrollTrigger.create({
-    trigger: '#services',
+    trigger: '#activities',
     start: 'top 72%',
     onEnter: () => {
       if (done) return; done = true;
@@ -841,3 +841,28 @@ document.querySelectorAll('[data-work-card]').forEach(card => {
     }
   });
 });
+
+/* ── MOBILE BURGER MENU JS ── */
+(function() {
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  if (burgerBtn && mobMenu) {
+    burgerBtn.addEventListener('click', () => {
+      burgerBtn.classList.toggle('open');
+      mobMenu.classList.toggle('open');
+      if (mobMenu.classList.contains('open')) {
+        if (window.lenis) lenis.stop(); // Stop page scrolling when menu is open
+      } else {
+        if (window.lenis) lenis.start();
+      }
+    });
+
+    mobMenu.querySelectorAll('.mob-menu-link').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('open');
+        mobMenu.classList.remove('open');
+        if (window.lenis) lenis.start();
+      });
+    });
+  }
+})();
