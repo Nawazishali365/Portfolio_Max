@@ -365,16 +365,18 @@ def static_files(filename):
 
 # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 #  MAIN
-# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 
 import sys
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(sys.stdout, "reconfigure") else None
 
+# Initialize database on startup (for both gunicorn and direct flask runs)
+init_db()
+
 if __name__ == "__main__":
-    init_db()
-    print("\n" + "â•"*55)
-    print("  Usman Afzal Portfolio â€” Admin Server")
-    print("â•"*55)
+    print("\n" + "═"*55)
+    print("  Usman Afzal Portfolio — Admin Server")
+    print("══"*55)
     print(f"  Portfolio:    http://localhost:5000/")
     print(f"  Admin Panel:  http://localhost:5000/admin.html")
     print(f"  Database:     {DB_PATH}")
