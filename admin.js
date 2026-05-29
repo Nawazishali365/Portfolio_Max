@@ -1,5 +1,5 @@
 /* ══ API CONFIG ══ */
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = window.location.origin + '/api';
 let AUTH_TOKEN = sessionStorage.getItem('ua_admin_token') || '';
 
 async function api(method, path, body) {
@@ -303,8 +303,8 @@ async function handleFile(file, preview, urlInput) {
   try {
     const res = await apiUpload(file);
     if (res && res.url) {
-      showPreview("http://localhost:5000" + res.url, preview);
-      urlInput.value = "http://localhost:5000" + res.url;
+      showPreview(window.location.origin + res.url, preview);
+      urlInput.value = window.location.origin + res.url;
       toast("Image uploaded!", "success");
     } else {
       // fallback to base64 if upload fails
