@@ -249,7 +249,7 @@ svg{max-width:100%}
 /* ─── PROBLEMS ─── */
 .prob-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center}
 .prob-img{width:91%;max-width:35rem;overflow:hidden}
-.prob-img img{width:100%;transform:scale(1.05);transition:transform 1s ease}
+.prob-img img{width:100%;transform:scale(1.05);transition:transform 1s ease;pointer-events:none}
 .prob-img.in img{transform:scale(1)}
 .prob-items{display:flex;flex-direction:column;gap:2rem}
 .pb-item{display:flex;gap:1rem}
@@ -364,7 +364,7 @@ svg{max-width:100%}
   will-change:clip-path;
   transform:translateZ(0);
 }
-.wm img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+.wm img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.25,.46,.45,.94);pointer-events:none}
 .wc:hover .wm img{transform:scale(1.04)}
 .wm video{
   position:absolute;inset:0;width:100%;height:100%;
@@ -1374,11 +1374,13 @@ footer{
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 .mob-menu.open {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
 }
 .mob-menu-in {
   display: flex;
