@@ -59,31 +59,6 @@ const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
 
-/* ── CUSTOM CURSOR ── */
-const cur = document.getElementById('cur');
-let mx = -100, my = -100, cx = -100, cy = -100;
-cur.style.opacity = '0';
-let curMoved = false;
-document.addEventListener('mousemove', e => { 
-  mx = e.clientX; my = e.clientY; 
-  if(!curMoved) { cur.style.opacity = '1'; cx = mx; cy = my; curMoved = true; }
-});
-(function animCur() {
-  cx += (mx - cx) * 0.14; cy += (my - cy) * 0.14;
-  cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
-  requestAnimationFrame(animCur);
-})();
-document.addEventListener('mouseleave', () => cur.classList.add('hide'));
-document.addEventListener('mouseenter', () => cur.classList.remove('hide'));
-document.querySelectorAll('a,button,[data-mag]').forEach(el => {
-  el.addEventListener('mouseenter', () => { if (!cur.classList.contains('vw')) cur.classList.add('lg'); });
-  el.addEventListener('mouseleave', () => cur.classList.remove('lg'));
-});
-// VIEW cursor on work cards
-document.querySelectorAll('.wc').forEach(card => {
-  card.addEventListener('mouseenter', () => { cur.classList.remove('lg'); cur.classList.add('vw'); });
-  card.addEventListener('mouseleave', () => cur.classList.remove('vw'));
-});
 
 /* ── NAV SCROLL EFFECTS ── */
 const nav = document.getElementById('nav');
@@ -232,17 +207,23 @@ if (wordsEl) {
 document.querySelectorAll('[data-work-card]').forEach(card => {
   const wm = card.querySelector('.wm');
   const wmImg = wm?.querySelector('img');
-  // y:40 instead of 90 — less travel means the clip-path child recalculates
-  // across a shorter range, eliminating the compositor stutter
-  gsap.set(card, { opacity: 0, y: 40, force3D: true });
+  const grid = card.querySelector('.wc-grid');
+  const bg = card.querySelector('.wc-bg');
+  
+  gsap.set(card, { opacity: 0 });
+  if (grid) gsap.set(grid, { y: 40, force3D: true });
+  if (bg) gsap.set(bg, { y: 40, force3D: true });
   if (wm) gsap.set(wm, { clipPath: 'inset(0 0 100% 0 round .75rem)' });
   if (wmImg) gsap.set(wmImg, { scale: 1.16, force3D: true });
+  
   ScrollTrigger.create({
     trigger: card,
     start: 'top 88%',
     onEnter: () => {
       // Card settles into position first (force3D keeps it on GPU layer)
-      gsap.to(card, { opacity: 1, y: 0, duration: 1.4, ease: 'expo.out', force3D: true });
+      gsap.to(card, { opacity: 1, duration: 0.8, ease: 'power2.out' });
+      if (grid) gsap.to(grid, { y: 0, duration: 1.4, ease: 'expo.out', force3D: true });
+      if (bg) gsap.to(bg, { y: 0, duration: 1.4, ease: 'expo.out', force3D: true });
       // Clip-path starts after card is mostly in position to avoid jitter
       if (wm) gsap.to(wm, { clipPath: 'inset(0 0 0% 0 round .75rem)', duration: 1.15, ease: 'power4.out', delay: 0.28 });
       if (wmImg) gsap.to(wmImg, { scale: 1, duration: 1.5, ease: 'power2.out', delay: 0.28, force3D: true });
@@ -443,24 +424,6 @@ gsap.utils.toArray('.wy-img img').forEach((img, i) => {
   });
 });
 
-/* ── WORK CARD 3D TILT ── */
-document.querySelectorAll('.wc').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    gsap.to(card, {
-      rotateY: x * 3,
-      rotateX: -y * 2,
-      duration: .5,
-      ease: 'power2.out',
-      transformPerspective: 1000,
-    });
-  });
-  card.addEventListener('mouseleave', () => {
-    gsap.to(card, { rotateY: 0, rotateX: 0, duration: .7, ease: 'elastic.out(1,.6)' });
-  });
-});
 
 /* ── INTRO BRIDGE BODY FADE ── */
 const introBridgeBody = document.getElementById('introBridgeBody');
@@ -592,19 +555,6 @@ document.querySelectorAll('.how-num').forEach((num, i) => {
   });
 });
 
-/* ── SCROLL VELOCITY SKEW ON IMAGE CONTAINERS ── */
-let _prevS = 0, _skew = 0;
-const _skewEls = document.querySelectorAll('.wm, .how-img, .prob-img');
-gsap.ticker.add(() => {
-  const s = lenis?.scroll ?? 0;
-  const delta = s - _prevS;
-  _prevS = s;
-  const target = Math.max(-4, Math.min(4, delta * -0.09));
-  _skew += (target - _skew) * 0.1;
-  if (Math.abs(_skew) > 0.008 || Math.abs(target) > 0.008) {
-    _skewEls.forEach(el => gsap.set(el, { skewY: _skew }));
-  }
-});
 
 /* ── HOW CONNECTOR LINE (scroll-scrubbed linear draw) ── */
 const howConLine = document.getElementById('howConLine');

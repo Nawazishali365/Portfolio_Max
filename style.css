@@ -5,7 +5,7 @@ body{
   background:#000;color:#eaeef4;
   font-family:'DM Sans',Arial,sans-serif;
   font-size:1rem;line-height:1.5;
-  cursor:none;overflow-x:hidden;
+  overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
@@ -14,7 +14,7 @@ img{max-width:100%;display:block}
 video{width:100%;height:100%;object-fit:cover;display:block}
 h1,h2,h3,h4,h5,h6,p{margin:0}
 p{color:#b7bbc0}
-button{background:none;border:none;cursor:none;font-family:inherit;padding:0}
+button{background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
 svg{max-width:100%}
 
 /* ─── DESIGN TOKENS ─── */
@@ -38,17 +38,8 @@ svg{max-width:100%}
 
 /* ─── CURSOR ─── */
 #cur{
-  position:fixed;inset:0 auto auto 0;
-  width:1rem;height:1rem;
-  border-radius:var(--r-rnd);
-  border:1px solid var(--w60);background:var(--w30);
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:width .2s,height .2s,background .2s,border-color .2s,opacity .2s;
-  will-change:transform;
+  display:none !important;
 }
-#cur.lg{width:2.75rem;height:2.75rem;background:var(--w10);border-color:transparent}
-#cur.hide{opacity:0;width:.5rem;height:.5rem}
 
 /* ─── LAYOUT ─── */
 .w{max-width:90rem;width:calc(100% - 6rem);margin:0 auto}
@@ -88,7 +79,7 @@ svg{max-width:100%}
   display:inline-flex;align-items:center;justify-content:center;
   gap:.5rem;border-radius:var(--r-xs);
   font-family:var(--font);font-size:.9rem;font-weight:400;
-  text-decoration:none;cursor:none;position:relative;overflow:hidden;
+  text-decoration:none;cursor:pointer;position:relative;overflow:hidden;
 }
 /* Button inner content */
 .btn-in{
@@ -565,7 +556,7 @@ svg{max-width:100%}
   border-radius:calc(var(--r-xs) - .125rem);
   background:transparent;border:1px solid transparent;
   padding:1rem .75rem;text-align:center;position:relative;
-  transition:border-color .25s;cursor:none;width:100%;
+  transition:border-color .25s;cursor:pointer;width:100%;
 }
 .fb.on{border-color:rgba(239,238,236,.12)}
 .fb-bg{
@@ -619,7 +610,7 @@ svg{max-width:100%}
 .ai{border-bottom:1px solid var(--nd)}
 .ab{
   display:flex;justify-content:space-between;align-items:center;
-  gap:3rem;width:100%;padding:1rem 0;text-align:left;cursor:none;
+  gap:3rem;width:100%;padding:1rem 0;text-align:left;cursor:pointer;
 }
 .aq{font-size:1.25rem;font-weight:700;color:var(--nlt);line-height:1.3}
 .aico{
@@ -731,7 +722,6 @@ footer{
   font-family:var(--mono);font-size:.72rem;color:var(--brand);
   opacity:0;transform:translateY(1.25rem);
   transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);
-  cursor:none;
 }
 .float-bd.show{opacity:1;transform:none}
 .float-dot{
@@ -771,14 +761,8 @@ footer{
 
 /* ─── RESPONSIVE ─── */
 @media (pointer: coarse), (hover: none) {
-  body {
-    cursor: auto !important;
-  }
   a, button, [data-mag] {
     cursor: pointer !important;
-  }
-  #cur {
-    display: none !important;
   }
 }
 
