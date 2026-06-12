@@ -123,36 +123,57 @@ function splitWords(el) {
 
 /* ── H2 SPLIT REVEAL ── */
 document.querySelectorAll('[data-split-h2]').forEach(el => {
-  const lines = splitLines(el);
-  gsap.set(lines, { y: '108%' });
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 88%',
-    onEnter: () => {
-      gsap.to(lines, {
-        y: '0%',
-        duration: 1.0,
-        ease: 'expo.out',
-        stagger: 0.13,
-      });
-    }
-  });
+  if (window.innerWidth > 1024) {
+    const lines = splitLines(el);
+    gsap.set(lines, { y: '108%' });
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 88%',
+      onEnter: () => {
+        gsap.to(lines, {
+          y: '0%',
+          duration: 1.0,
+          ease: 'expo.out',
+          stagger: 0.13,
+        });
+      }
+    });
+  } else {
+    gsap.set(el, { opacity: 0, y: 20 });
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 88%',
+      onEnter: () => {
+        gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
+      }
+    });
+  }
 });
 
 /* ── SINGLE LINE REVEAL ── */
 document.querySelectorAll('[data-split-line]').forEach(el => {
-  // Wrap in line-wrap
-  const orig = el.innerHTML;
-  el.innerHTML = `<span class="line-wrap"><span class="line-inner">${orig}</span></span>`;
-  const inner = el.querySelector('.line-inner');
-  gsap.set(inner, { y: '105%' });
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 90%',
-    onEnter: () => {
-      gsap.to(inner, { y: '0%', duration: .85, ease: 'power3.out' });
-    }
-  });
+  if (window.innerWidth > 1024) {
+    const orig = el.innerHTML;
+    el.innerHTML = `<span class="line-wrap"><span class="line-inner">${orig}</span></span>`;
+    const inner = el.querySelector('.line-inner');
+    gsap.set(inner, { y: '105%' });
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%',
+      onEnter: () => {
+        gsap.to(inner, { y: '0%', duration: .85, ease: 'power3.out' });
+      }
+    });
+  } else {
+    gsap.set(el, { opacity: 0, y: 15 });
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%',
+      onEnter: () => {
+        gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+      }
+    });
+  }
 });
 
 /* ── FADE UP (p tags next to split lines) ── */
@@ -304,15 +325,26 @@ document.querySelectorAll('.how-step').forEach((step, i) => {
 /* ── CTA TEXT REVEAL ── */
 const ctaEl = document.getElementById('ctaText');
 if (ctaEl) {
-  const ctaLines = splitLines(ctaEl);
-  gsap.set(ctaLines, { y: '110%' });
-  ScrollTrigger.create({
-    trigger: ctaEl,
-    start: 'top 80%',
-    onEnter: () => {
-      gsap.to(ctaLines, { y: '0%', duration: 1.1, ease: 'power4.out', stagger: .14 });
-    }
-  });
+  if (window.innerWidth > 1024) {
+    const ctaLines = splitLines(ctaEl);
+    gsap.set(ctaLines, { y: '110%' });
+    ScrollTrigger.create({
+      trigger: ctaEl,
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.to(ctaLines, { y: '0%', duration: 1.1, ease: 'power4.out', stagger: .14 });
+      }
+    });
+  } else {
+    gsap.set(ctaEl, { opacity: 0, y: 20 });
+    ScrollTrigger.create({
+      trigger: ctaEl,
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.to(ctaEl, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' });
+      }
+    });
+  }
 }
 
 /* ── MARQUEE with scroll velocity ── */
@@ -423,9 +455,14 @@ window.addEventListener('load', () => {
 
   // Hero H1 lines
   const heroH1 = document.getElementById('heroH1');
-  const h1Lines = splitLines(heroH1);
-  gsap.set(h1Lines, { y: '110%' });
-  tl.to(h1Lines, { y: '0%', duration: 1.1, stagger: 0.11 }, D + 0.2);
+  if (window.innerWidth > 1024) {
+    const h1Lines = splitLines(heroH1);
+    gsap.set(h1Lines, { y: '110%' });
+    tl.to(h1Lines, { y: '0%', duration: 1.1, stagger: 0.11 }, D + 0.2);
+  } else {
+    gsap.set(heroH1, { opacity: 0, y: 14 });
+    tl.to(heroH1, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, D + 0.2);
+  }
 
   // Sub text
   gsap.set('#heroSub', { y: 18, opacity: 0 });
@@ -635,6 +672,27 @@ document.querySelectorAll('[data-lazy-video]').forEach(video => {
   });
 });
 
+/* ── VIDEO OVERLAY CLICK TO PLAY ── */
+(function() {
+  const overlay = document.getElementById('videoOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      overlay.classList.add('hidden');
+      
+      const iframe = overlay.previousElementSibling;
+      if (iframe && iframe.tagName === 'IFRAME') {
+        let src = iframe.src;
+        if (src.indexOf('?') > -1) {
+          src += '&autoplay=1';
+        } else {
+          src += '?autoplay=1';
+        }
+        iframe.src = src;
+      }
+    });
+  }
+})();
+
 /* ── FOOTER ENTRANCE ── */
 gsap.set('footer', { opacity: 0, y: 24 });
 ScrollTrigger.create({
@@ -746,23 +804,34 @@ gsap.to('#heroGrad', {
 (function(){
   const para = document.querySelector('.intro-bridge-p');
   if (!para) return;
-  const words = para.textContent.trim().split(/\s+/);
-  para.innerHTML = words.map(w =>
-    '<span class="iw" style="opacity:0">' + w + ' </span>'
-  ).join('');
-  ScrollTrigger.create({
-    trigger: para,
-    start: 'top 82%',
-    onEnter: () => {
-      gsap.to(para.querySelectorAll('.iw'), {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.out',
-        stagger: 0.026,
-        delay: 0.85
-      });
-    }
-  });
+  if (window.innerWidth > 1024) {
+    const words = para.textContent.trim().split(/\s+/);
+    para.innerHTML = words.map(w =>
+      '<span class="iw" style="opacity:0">' + w + ' </span>'
+    ).join('');
+    ScrollTrigger.create({
+      trigger: para,
+      start: 'top 82%',
+      onEnter: () => {
+        gsap.to(para.querySelectorAll('.iw'), {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+          stagger: 0.026,
+          delay: 0.85
+        });
+      }
+    });
+  } else {
+    gsap.set(para, { opacity: 0, y: 15 });
+    ScrollTrigger.create({
+      trigger: para,
+      start: 'top 82%',
+      onEnter: () => {
+        gsap.to(para, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.45 });
+      }
+    });
+  }
 })();
 
 /* ── TESTIMONIAL CARD HOVER LIFT ── */
