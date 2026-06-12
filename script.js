@@ -391,6 +391,8 @@ if (mqList) {
 
 /* ── MAGNETIC BUTTONS ── */
 document.querySelectorAll('[data-mag]').forEach(btn => {
+  // Skip magnetic effect on touch devices to prevent scroll interference
+  if (window.matchMedia('(pointer: coarse)').matches) return;
   const strength = 0.3;
   btn.addEventListener('mousemove', e => {
     const r = btn.getBoundingClientRect();
@@ -734,6 +736,8 @@ if (lenis) {
 (function(){
   const heroEl = document.getElementById('hero');
   if (!heroEl) return;
+  // Skip on touch devices — mousemove listeners can block scroll propagation
+  if (window.matchMedia('(pointer: coarse)').matches) return;
   heroEl.addEventListener('mousemove', e => {
     const r = heroEl.getBoundingClientRect();
     const nx = (e.clientX - r.left) / r.width - 0.5;

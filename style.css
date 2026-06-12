@@ -137,6 +137,7 @@ svg{max-width:100%}
   position:relative;height:100svh;
   display:flex;flex-direction:column;
   background:var(--black);overflow:hidden;
+  touch-action:pan-y;
 }
 .hero-outer{flex:1;padding:1vw;position:relative}
 .hero-box{
@@ -540,7 +541,8 @@ svg{max-width:100%}
   position:relative;z-index:3;
   padding:11rem 0;
   background:transparent;
-  margin-top:-5svh;overflow:clip;
+  margin-top:-5svh;overflow:hidden;
+  touch-action:pan-y;
 }
 .tabs-layout{
   display:grid;grid-template-columns:1fr 1.2fr;
@@ -735,7 +737,8 @@ footer{
 .card-slide{
   border-radius:2.5rem 2.5rem 0 0;
   position:relative;z-index:4;
-  overflow:clip;
+  overflow:hidden;
+  touch-action:pan-y;
 }
 .card-slide + .card-slide{border-radius:0}
 
@@ -763,6 +766,14 @@ footer{
 @media (pointer: coarse), (hover: none) {
   a, button, [data-mag] {
     cursor: pointer !important;
+  }
+  /* Ensure all interactive & animated elements allow vertical scroll on touch */
+  .hero, .hero-box, .hero-outer, .hero-cnt,
+  .wc, .card-slide, .sec-sv,
+  .sep, .sep-wrap, .sep-lines,
+  .fbar, .mq-track, .mq-list,
+  section, main {
+    touch-action: pan-y;
   }
 }
 
