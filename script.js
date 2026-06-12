@@ -55,24 +55,52 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 })();
 
 /* ── LENIS ── */
-const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
-gsap.ticker.add(t => lenis.raf(t * 1000));
-gsap.ticker.lagSmoothing(0);
+let lenis;
+if (window.innerWidth > 1024) {
+  lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
 
 
 /* ── NAV SCROLL EFFECTS ── */
 const nav = document.getElementById('nav');
 const navProg = document.getElementById('navProg');
-lenis.on('scroll', ({ progress }) => {
-  nav.classList.toggle('sc', lenis.scroll > 60);
-  navProg.style.width = (progress * 100) + '%';
-});
+if (lenis) {
+  lenis.on('scroll', ({ progress }) => {
+    nav.classList.toggle('sc', lenis.scroll > 60);
+    navProg.style.width = (progress * 100) + '%';
+  });
+} else {
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    nav.classList.toggle('sc', scrollY > 60);
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = totalHeight > 0 ? (scrollY / totalHeight) : 0;
+    navProg.style.width = (progress * 100) + '%';
+  });
+}
 
 /* ── SMOOTH ANCHOR SCROLL ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const el = document.getElementById(a.getAttribute('href').slice(1));
-    if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -80, duration: 1.4, easing: t => 1 - Math.pow(1 - t, 4) }); }
+    if (el) {
+      e.preventDefault();
+      if (lenis) {
+        lenis.scrollTo(el, { offset: -80, duration: 1.4, easing: t => 1 - Math.pow(1 - t, 4) });
+      } else {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
   });
 });
 
@@ -297,9 +325,24 @@ if (mqList) {
   let mqX = 0, mqSpeed = 1, mqTarget = 1;
   const baseSpeed = 0.4; // px per frame
 
-  lenis.on('scroll', ({ velocity }) => {
-    mqTarget = baseSpeed + Math.abs(velocity) * 0.4;
-  });
+  if (lenis) {
+    lenis.on('scroll', ({ velocity }) => {
+      mqTarget = baseSpeed + Math.abs(velocity) * 0.4;
+    });
+  } else {
+    let lastScrollY = window.scrollY;
+    let lastTime = Date.now();
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      const currentTime = Date.now();
+      const dt = Math.max(1, currentTime - lastTime);
+      const dy = currentScrollY - lastScrollY;
+      const velocity = dy / dt;
+      mqTarget = baseSpeed + Math.abs(velocity) * 15;
+      lastScrollY = currentScrollY;
+      lastTime = currentTime;
+    });
+  }
 
   let totalW = mqList.offsetWidth;
   window.addEventListener('resize', () => { totalW = mqList.offsetWidth; });
@@ -516,7 +559,8 @@ setTimeout(() => document.getElementById('floatBd')?.classList.add('show'), 2600
       let active = '';
       secIds.forEach(id => {
         const el = document.getElementById(id);
-        if (el && lenis.scroll >= el.offsetTop - 200) active = id;
+        const scrollY = lenis ? lenis.scroll : (window.scrollY || document.documentElement.scrollTop);
+        if (el && scrollY >= el.offsetTop - 200) active = id;
       });
       navAs.forEach(a => a.classList.toggle('act', !!active && a.getAttribute('href') === '#' + active));
     }
@@ -624,7 +668,9 @@ document.querySelectorAll('.sep-lines').forEach(container => {
 });
 
 /* ── REFRESH SCROLLTRIGGER ON LENIS ── */
-lenis.on('scroll', ScrollTrigger.update);
+if (lenis) {
+  lenis.on('scroll', ScrollTrigger.update);
+}
 
 /* ── HERO MOUSE PARALLAX ── */
 (function(){
@@ -801,9 +847,11 @@ document.querySelectorAll('[data-work-card]').forEach(card => {
       burgerBtn.classList.toggle('open');
       mobMenu.classList.toggle('open');
       if (mobMenu.classList.contains('open')) {
-        if (window.lenis) lenis.stop(); // Stop page scrolling when menu is open
+        if (window.lenis) lenis.stop();
+        document.body.classList.add('scroll-lock');
       } else {
         if (window.lenis) lenis.start();
+        document.body.classList.remove('scroll-lock');
       }
     });
 
@@ -812,6 +860,7 @@ document.querySelectorAll('[data-work-card]').forEach(card => {
         burgerBtn.classList.remove('open');
         mobMenu.classList.remove('open');
         if (window.lenis) lenis.start();
+        document.body.classList.remove('scroll-lock');
       });
     });
   }

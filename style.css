@@ -1554,4 +1554,28 @@ footer{
     grid-template-columns: 1fr;
     padding: 0;
   }
+  
+  /* Disable separator overlay margins on mobile to prevent overlapping */
+  .sep {
+    height: auto !important;
+    margin-top: 0 !important;
+    padding: 3rem 0 !important;
+  }
+  .sep-wrap {
+    height: auto !important;
+  }
+  .sep.btm .sep-wrap {
+    height: auto !important;
+  }
+  .sep-lines {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+}
+
+/* Scroll lock utility */
+body.scroll-lock {
+  overflow: hidden !important;
 }
