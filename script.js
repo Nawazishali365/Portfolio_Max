@@ -460,6 +460,29 @@ document.querySelectorAll('.ab').forEach(btn => {
 
 /* ── PAGE LOAD SEQUENCE ── */
 window.addEventListener('load', () => {
+  if (IS_TOUCH) {
+    /* On touch, the first second after load is when the user usually
+       reaches for the screen. Run a single short fade-in instead of the
+       multi-track timeline so the main thread is free for scroll. */
+    gsap.set(['#heroBadges', '#heroSub', '#heroBtns'], { opacity: 0, y: 10 });
+    gsap.set('#heroImg', { opacity: 0 });
+    gsap.set('#heroGrad', { opacity: 0 });
+    const heroH1 = document.getElementById('heroH1');
+    gsap.set(heroH1, { opacity: 0, y: 10 });
+
+    gsap.to('#heroGrad', { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.1 });
+    gsap.to('#heroImg', { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.15 });
+    gsap.to([heroH1, '#heroBadges', '#heroSub', '#heroBtns'], {
+      opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08, delay: 0.2
+    });
+    gsap.to('#mqSec', { opacity: 1, duration: 0.5, delay: 0.6 });
+
+    /* Defer ScrollTrigger.refresh past the first-interaction window so
+       the layout measurement doesn't compete with the user's first scroll. */
+    setTimeout(() => ScrollTrigger.refresh(), 800);
+    return;
+  }
+
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
   const D = 0.85; // offset — content starts animating as loader lifts
 
@@ -476,14 +499,9 @@ window.addEventListener('load', () => {
 
   // Hero H1 lines
   const heroH1 = document.getElementById('heroH1');
-  if (window.innerWidth > 1024) {
-    const h1Lines = splitLines(heroH1);
-    gsap.set(h1Lines, { y: '110%' });
-    tl.to(h1Lines, { y: '0%', duration: 1.1, stagger: 0.11 }, D + 0.2);
-  } else {
-    gsap.set(heroH1, { opacity: 0, y: 14 });
-    tl.to(heroH1, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, D + 0.2);
-  }
+  const h1Lines = splitLines(heroH1);
+  gsap.set(h1Lines, { y: '110%' });
+  tl.to(h1Lines, { y: '0%', duration: 1.1, stagger: 0.11 }, D + 0.2);
 
   // Sub text
   gsap.set('#heroSub', { y: 18, opacity: 0 });
