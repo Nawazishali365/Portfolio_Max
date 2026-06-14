@@ -775,6 +775,21 @@ footer{
   section, main {
     touch-action: pan-y;
   }
+  /* Backdrop-filter on a fixed element forces the GPU to re-blur the
+     area behind it on every scroll frame — the #1 cause of "sticky"
+     mobile scroll. Drop blur on touch; keep a translucent fill instead. */
+  .nav.sc,
+  .float-bd,
+  .mob-menu,
+  .video-play-btn,
+  .btn-s {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .nav.sc { background: rgba(0,0,0,.92) !important; }
+  /* Parallax was disabled in JS on touch — drop the will-change hints so
+     these elements aren't promoted to standalone GPU layers for nothing. */
+  .hero-cnt, .mq-sec { will-change: auto !important; }
 }
 
 @media(max-width:1200px){
