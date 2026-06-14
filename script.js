@@ -54,9 +54,15 @@ document.getElementById('yr').textContent = new Date().getFullYear();
   }
 })();
 
+/* ── TOUCH DETECTION ──
+   Used to skip scroll-driven parallax, hover effects, and per-frame
+   animations on mobile. On touch devices these compete with the browser's
+   native scroll, making the page feel sticky/laggy under the finger. */
+const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024;
+
 /* ── LENIS ── */
 let lenis;
-if (window.innerWidth > 1024) {
+if (!IS_TOUCH) {
   lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -229,10 +235,12 @@ if (probImg) {
       if (pInner) gsap.to(pInner, { scale: 1, duration: 1.5, ease: 'power2.out' });
     }
   });
-  gsap.to(probImg, {
-    y: -40, ease: 'none',
-    scrollTrigger: { trigger: probImg, start: 'top bottom', end: 'bottom top', scrub: true }
-  });
+  if (!IS_TOUCH) {
+    gsap.to(probImg, {
+      y: -40, ease: 'none',
+      scrollTrigger: { trigger: probImg, start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+  }
 }
 
 /* ── WORDS REVEAL (staggered per word) ── */
@@ -240,16 +248,27 @@ const wordsEl = document.getElementById('wordsEl');
 if (wordsEl) {
   const wds = splitWords(wordsEl);
   gsap.set(wds, { color: 'var(--nd)' });
-  ScrollTrigger.create({
-    trigger: wordsEl,
-    start: 'top 75%',
-    end: 'bottom 50%',
-    scrub: .5,
-    onUpdate: self => {
-      const idx = Math.floor(self.progress * wds.length);
-      wds.forEach((w, i) => w.classList.toggle('on', i <= idx));
-    }
-  });
+  if (IS_TOUCH) {
+    /* One-shot stagger on touch — avoids per-frame DOM mutation while scrolling. */
+    ScrollTrigger.create({
+      trigger: wordsEl,
+      start: 'top 80%',
+      onEnter: () => {
+        wds.forEach((w, i) => setTimeout(() => w.classList.add('on'), i * 35));
+      }
+    });
+  } else {
+    ScrollTrigger.create({
+      trigger: wordsEl,
+      start: 'top 75%',
+      end: 'bottom 50%',
+      scrub: .5,
+      onUpdate: self => {
+        const idx = Math.floor(self.progress * wds.length);
+        wds.forEach((w, i) => w.classList.toggle('on', i <= idx));
+      }
+    });
+  }
 }
 
 /* ── WORK CARD REVEAL ── */
@@ -392,7 +411,7 @@ if (mqList) {
 /* ── MAGNETIC BUTTONS ── */
 document.querySelectorAll('[data-mag]').forEach(btn => {
   // Skip magnetic effect on touch devices to prevent scroll interference
-  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (IS_TOUCH) return;
   const strength = 0.3;
   btn.addEventListener('mousemove', e => {
     const r = btn.getBoundingClientRect();
@@ -489,22 +508,26 @@ window.addEventListener('load', () => {
 });
 
 /* ── SECTION PARALLAX SUBTLE ── */
-gsap.utils.toArray('.wc').forEach(card => {
-  gsap.to(card, {
-    y: -20,
-    ease: 'none',
-    scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+if (!IS_TOUCH) {
+  gsap.utils.toArray('.wc').forEach(card => {
+    gsap.to(card, {
+      y: -20,
+      ease: 'none',
+      scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+    });
   });
-});
+}
 
 /* ── WHY GRID SUBTLE STAGGER ON SCROLL ── */
-gsap.utils.toArray('.wy-img img').forEach((img, i) => {
-  gsap.to(img, {
-    scale: 1.04,
-    ease: 'none',
-    scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: true }
+if (!IS_TOUCH) {
+  gsap.utils.toArray('.wy-img img').forEach((img, i) => {
+    gsap.to(img, {
+      scale: 1.04,
+      ease: 'none',
+      scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: true }
+    });
   });
-});
+}
 
 
 /* ── INTRO BRIDGE BODY FADE ── */
@@ -554,22 +577,26 @@ if (statItems.length) {
   });
 }
 
-/* ── HERO PARALLAX ON SCROLL ── */
-gsap.to('.hero-cnt', {
-  y: -100,
-  ease: 'none',
-  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
-});
-gsap.to('#heroImg', {
-  y: -160,
-  ease: 'none',
-  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
-});
-gsap.to('#mqSec', {
-  y: -50,
-  ease: 'none',
-  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
-});
+/* ── HERO PARALLAX ON SCROLL ──
+   Scrub-driven transforms fight the native scroll on touch devices and make
+   the hero feel "sticky" under the finger. Desktop only. */
+if (!IS_TOUCH) {
+  gsap.to('.hero-cnt', {
+    y: -100,
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+  gsap.to('#heroImg', {
+    y: -160,
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+  gsap.to('#mqSec', {
+    y: -50,
+    ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+}
 
 /* ── NAV LIGHT MODE when over light sections ── */
 document.querySelectorAll('.lt').forEach(sec => {
@@ -642,37 +669,50 @@ document.querySelectorAll('.how-num').forEach((num, i) => {
 /* ── HOW CONNECTOR LINE (scroll-scrubbed linear draw) ── */
 const howConLine = document.getElementById('howConLine');
 if (howConLine) {
-  gsap.to(howConLine, {
-    width: '100%',
-    ease: 'none',
-    scrollTrigger: {
+  if (IS_TOUCH) {
+    /* Skip scrub on touch — show the line drawn once it enters view. */
+    ScrollTrigger.create({
       trigger: '.how-nums',
       start: 'top 78%',
-      end: 'top 22%',
-      scrub: 1.2
-    }
-  });
+      onEnter: () => gsap.to(howConLine, { width: '100%', duration: 1.2, ease: 'power2.out' })
+    });
+  } else {
+    gsap.to(howConLine, {
+      width: '100%',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.how-nums',
+        start: 'top 78%',
+        end: 'top 22%',
+        scrub: 1.2
+      }
+    });
+  }
 }
 
-/* ── VIDEO LAZY LOAD ON HOVER ── */
-document.querySelectorAll('[data-lazy-video]').forEach(video => {
-  const card = video.closest('.wc');
-  if (!card) return;
-  let loaded = false;
-  card.addEventListener('mouseenter', () => {
-    if (!loaded) {
-      video.load();
-      loaded = true;
-    }
-    video.play().catch(() => {});
-    gsap.to(video, { opacity: 1, duration: 0.25 });
+/* ── VIDEO LAZY LOAD ON HOVER ──
+   Hover events fire on tap on touch devices, kicking off a video load +
+   play right as the user starts scrolling. Skip on touch. */
+if (!IS_TOUCH) {
+  document.querySelectorAll('[data-lazy-video]').forEach(video => {
+    const card = video.closest('.wc');
+    if (!card) return;
+    let loaded = false;
+    card.addEventListener('mouseenter', () => {
+      if (!loaded) {
+        video.load();
+        loaded = true;
+      }
+      video.play().catch(() => {});
+      gsap.to(video, { opacity: 1, duration: 0.25 });
+    });
+    card.addEventListener('mouseleave', () => {
+      video.pause();
+      video.currentTime = 0;
+      gsap.to(video, { opacity: 0, duration: 0.25 });
+    });
   });
-  card.addEventListener('mouseleave', () => {
-    video.pause();
-    video.currentTime = 0;
-    gsap.to(video, { opacity: 0, duration: 0.25 });
-  });
-});
+}
 
 /* ── VIDEO OVERLAY CLICK TO PLAY ── */
 (function() {
@@ -710,6 +750,22 @@ document.querySelectorAll('.sep-lines').forEach(container => {
   const sep = container.closest('.sep');
   const isBtm = sep.classList.contains('btm');
 
+  if (IS_TOUCH) {
+    /* One-shot reveal on touch — no scrub. */
+    gsap.set(bars, { scaleX: 0 });
+    ScrollTrigger.create({
+      trigger: sep,
+      start: 'top 85%',
+      onEnter: () => gsap.to(bars, {
+        scaleX: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: { each: 0.05, from: isBtm ? 'start' : 'end' }
+      })
+    });
+    return;
+  }
+
   /* animate from the widest bar to the narrowest */
   gsap.fromTo(bars,
     { scaleX: 0 },
@@ -737,7 +793,7 @@ if (lenis) {
   const heroEl = document.getElementById('hero');
   if (!heroEl) return;
   // Skip on touch devices — mousemove listeners can block scroll propagation
-  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (IS_TOUCH) return;
   heroEl.addEventListener('mousemove', e => {
     const r = heroEl.getBoundingClientRect();
     const nx = (e.clientX - r.left) / r.width - 0.5;
@@ -757,18 +813,26 @@ if (lenis) {
   });
 })();
 
-/* ── HERO GRADIENT GENTLE PULSE ── */
-gsap.to('#heroGrad', {
-  scale: 1.055,
-  duration: 8,
-  ease: 'sine.inOut',
-  yoyo: true,
-  repeat: -1,
-  delay: 2
-});
+/* ── HERO GRADIENT GENTLE PULSE ──
+   Continuous transform on a large element triggers nonstop repaints over
+   the hero; on mobile this compounds with scroll redraw and feels sticky. */
+if (!IS_TOUCH) {
+  gsap.to('#heroGrad', {
+    scale: 1.055,
+    duration: 8,
+    ease: 'sine.inOut',
+    yoyo: true,
+    repeat: -1,
+    delay: 2
+  });
+}
 
-/* ── HERO FLOATING BRAND PARTICLES ── */
+/* ── HERO FLOATING BRAND PARTICLES ──
+   20 always-animating absolutely-positioned dots above the hero gradient
+   keep the compositor busy. Skip on touch where the cost shows up as
+   scroll jank. */
 (function(){
+  if (IS_TOUCH) return;
   const heroBox = document.querySelector('.hero-box');
   if (!heroBox) return;
   for (let i = 0; i < 20; i++) {
@@ -839,14 +903,16 @@ gsap.to('#heroGrad', {
 })();
 
 /* ── TESTIMONIAL CARD HOVER LIFT ── */
-document.querySelectorAll('.pc').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    gsap.to(card, { y: -7, scale: 1.012, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+if (!IS_TOUCH) {
+  document.querySelectorAll('.pc').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, { y: -7, scale: 1.012, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { y: 0, scale: 1, duration: 0.5, ease: 'elastic.out(1,.55)', overwrite: 'auto' });
+    });
   });
-  card.addEventListener('mouseleave', () => {
-    gsap.to(card, { y: 0, scale: 1, duration: 0.5, ease: 'elastic.out(1,.55)', overwrite: 'auto' });
-  });
-});
+}
 
 /* ── SERVICE PANEL INITIAL FI STAGGER ON SCROLL ── */
 (function(){
