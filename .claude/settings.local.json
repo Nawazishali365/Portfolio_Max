@@ -11,7 +11,18 @@
       "Bash(curl -s \"https://cdn.prod.website-files.com/685992d920f7167b41444649/js/mf-new.achunk.db80639074bc0296.js\")",
       "Bash(curl -s \"https://cdn.prod.website-files.com/685992d920f7167b41444649/js/mf-new.achunk.22b66e874d42861f.js\")",
       "Bash(grep -E \"\\\\.\\(html|css|js\\)$\")",
-      "WebFetch(domain:www.linkedin.com)"
+      "WebFetch(domain:www.linkedin.com)",
+      "Bash(node -c \"C:/Users/Nawazish Ali/Downloads/Usman bhai/script.js\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git log *)",
+      "Bash(C:/Users/Nawazish Ali/Downloads/Usman bhai/venv/Scripts/python.exe *)",
+      "Bash(netstat -ano)",
+      "Bash(grep -iE \"\\\\.\\(mp4|mov|webm|avi|mkv|gif\\)$\")",
+      "Bash(command -v ffmpeg)",
+      "PowerShell(Get-Command *)",
+      "Bash(grep -iE \"\\\\.\\(png|jpg|jpeg|gif|webp|bmp\\)$\")"
     ]
   }
 }

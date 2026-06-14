@@ -38,6 +38,10 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     bar.style.width = '100%';
     pct.textContent = '100%';
     if (ldSkel && !skelFaded) gsap.to(ldSkel, { opacity: 0, duration: .25 });
+    
+    // Disable pointer events immediately so the loader can't block scrolling during/after transit
+    if (loader) loader.style.pointerEvents = 'none';
+
     gsap.to(loader, {
       yPercent: -100,
       duration: 0.78,
@@ -64,6 +68,7 @@ const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches || window.innerW
 let lenis;
 if (!IS_TOUCH) {
   lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+  window.lenis = lenis;
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 }

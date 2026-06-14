@@ -112,7 +112,10 @@ async function loadDynamicContent() {
 
     // Let's implement a simpler reload for GSAP
     if (window.ScrollTrigger) {
-      setTimeout(() => ScrollTrigger.refresh(), 500);
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+        if (window.lenis) window.lenis.resize();
+      }, 500);
     }
   } catch (e) {
     console.error("Failed to load dynamic content", e);
