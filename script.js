@@ -42,12 +42,25 @@ document.getElementById('yr').textContent = new Date().getFullYear();
     // Disable pointer events immediately so the loader can't block scrolling during/after transit
     if (loader) loader.style.pointerEvents = 'none';
 
+    // Force Chromium/Webkit to recalculate the hover target under the cursor
+    // to prevent wheel events from getting stuck on the fading/translated preloader elements.
+    document.body.style.pointerEvents = 'none';
+    document.body.offsetHeight; // Force a synchronous layout reflow/repaint
+    document.body.style.pointerEvents = '';
+
     gsap.to(loader, {
       yPercent: -100,
       duration: 0.78,
       delay: 0.3,
       ease: 'power3.inOut',
-      onComplete: () => { loader.style.display = 'none'; }
+      onComplete: () => {
+        if (loader) loader.style.display = 'none';
+        
+        // Force another hover target update once the loader is completely hidden/removed from layout
+        document.body.style.pointerEvents = 'none';
+        document.body.offsetHeight;
+        document.body.style.pointerEvents = '';
+      }
     });
   }
 
