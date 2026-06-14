@@ -132,7 +132,6 @@ svg{max-width:100%}
   position:relative;height:100svh;
   display:flex;flex-direction:column;
   background:var(--black);overflow:hidden;
-  touch-action:pan-y;
 }
 .hero-outer{flex:1;padding:1vw;position:relative}
 .hero-box{
@@ -537,7 +536,6 @@ svg{max-width:100%}
   padding:11rem 0;
   background:transparent;
   margin-top:-5svh;overflow:hidden;
-  touch-action:pan-y;
 }
 .tabs-layout{
   display:grid;grid-template-columns:1fr 1.2fr;
@@ -722,7 +720,6 @@ footer{
   border-radius:2.5rem 2.5rem 0 0;
   position:relative;z-index:4;
   overflow:hidden;
-  touch-action:pan-y;
 }
 .card-slide + .card-slide{border-radius:0}
 
@@ -750,32 +747,6 @@ footer{
 @media (pointer: coarse), (hover: none) {
   a, button, [data-mag] {
     cursor: pointer !important;
-  }
-  /* Universally allow vertical pan. Declaring this at the root prevents
-     the browser from delaying the scroll while it decides what an
-     ambiguous gesture (drag on a link/button/image) means — which on a
-     real device feels like "the page sticks until I lift and re-tap".
-     Children inherit unless they need an exception (a horizontal carousel
-     can override with pan-x). */
-  html, body {
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
-  }
-  /* Belt-and-braces on the elements that animate on scroll. */
-  .hero, .hero-box, .hero-outer, .hero-cnt,
-  .wc, .card-slide, .sec-sv,
-  .sep, .sep-wrap, .sep-lines,
-  .fbar, .mq-track, .mq-list,
-  section, main {
-    touch-action: pan-y;
-  }
-  /* Buttons, links, images, videos: force pan-y so a press-and-drag
-     starting on one of them scrolls instead of getting captured by the
-     element's default touch behavior. `manipulation` also disables the
-     ~300ms double-tap-zoom delay. */
-  a, button, .btn, .tag, .nav-link, .ab, .fb,
-  img, video, iframe, .wm, .how-img, .wy-img, .prob-img, .hero-img {
-    touch-action: manipulation;
   }
   /* Backdrop-filter on a fixed element forces the GPU to re-blur the
      area behind it on every scroll frame — the #1 cause of "sticky"
